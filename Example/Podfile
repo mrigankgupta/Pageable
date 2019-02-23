@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'Pageable_Example' do
+  pod 'Pageable', :path => '../'
+
+  target 'Pageable_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
