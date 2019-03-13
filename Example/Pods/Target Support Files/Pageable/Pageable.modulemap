@@ -1,0 +1,6 @@
+framework module Pageable {
+  umbrella header "Pageable-umbrella.h"
+
+  export *
+  module * { export * }
+}
