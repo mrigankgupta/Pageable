@@ -19,8 +19,8 @@ public protocol WebResponse: class {
 }
 
 public protocol PagableService {
-    func refreshPage()
-    func loadNextPage(currentPage: Int)
+    func loadPage(_ page: Int)
+    func cancelAllRequests()
 }
 
 public struct PageInfo<T> {
@@ -58,9 +58,10 @@ extension UITableView: Pageable {
     }
 
     public func setupRefreshControl(_ target: Any?, selector: Selector) {
-        refreshControl = UIRefreshControl()
-        refreshControl!.addTarget(target, action: selector, for: .valueChanged)
-        refreshControl!.beginRefreshing()
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(target, action: selector, for: .valueChanged)
+        refreshControl.beginRefreshing()
+        self.refreshControl = refreshControl
     }
 
 }
@@ -80,14 +81,16 @@ extension UICollectionView: Pageable {
     public func reloadAll(_ reload: Bool) {
         if reload {
             self.reloadData()
+            print("reload")
         }
         refreshControl?.endRefreshing()
     }
 
     public func setupRefreshControl(_ target: Any?, selector: Selector) {
-        refreshControl = UIRefreshControl()
-        refreshControl!.addTarget(target, action: selector, for: .valueChanged)
-        refreshControl!.beginRefreshing()
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(target, action: selector, for: .valueChanged)
+        refreshControl.beginRefreshing()
+        self.refreshControl = refreshControl
     }
 
 }

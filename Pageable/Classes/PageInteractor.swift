@@ -23,16 +23,12 @@ public class PageInteractor <Item, KeyType: Hashable> {
     public weak var pageDataSource: PageDataSource?
     public internal(set) var isLoading = false
     private var currentPage: Int
-    private let firstPage: Int
+    fileprivate let firstPage: Int
     private var showLoadingCell = false
 
     public init(firstPage: Int) {
         self.firstPage = firstPage
         currentPage = firstPage
-    }
-
-    public func setupService() {
-        refreshPage()
     }
 
     public func visibleRow() -> Int {
@@ -43,13 +39,14 @@ public class PageInteractor <Item, KeyType: Hashable> {
         array.removeAll()
         dict.removeAll()
         isLoading = true
-        service?.refreshPage()
+        service?.cancelAllRequests()
+        service?.loadPage(firstPage)
     }
 
     public func loadNextPage() {
         if !isLoading {
             isLoading = true
-            service?.loadNextPage(currentPage: currentPage)
+            service?.loadPage(currentPage+1)
         }
     }
 
@@ -94,19 +91,23 @@ extension PageInteractor: WebResponse {
 
     public func returnedResponse<T>(_ info: PageInfo<T>?) {
         if let currentResponse = info {
+            let lastPageNumber = currentPage
             updatePage(number: currentResponse.page, totalPageCount: currentResponse.totalPageCount)
+            print(currentResponse.page)
             if currentResponse.page == firstPage {
                 pageDataSource?.addAll(items: currentResponse.types as [AnyObject])
                 DispatchQueue.main.async {
                     self.pageDelegate?.reloadAll(true)
                 }
-            } else {
+            } else if currentResponse.page == lastPageNumber + 1 {
                 if let numberOfItems = pageDataSource?.addUniqueItems(for: currentResponse.types as [AnyObject]) {
                     let newIndexPaths = getUniqueItemsIndexPath(addedRange: numberOfItems)
                     DispatchQueue.main.async {
                         self.pageDelegate?.insertAndUpdateRows(new: newIndexPaths)
                     }
                 }
+            }else{
+                print("Ignore result as requests landed in non-sequential order")
             }
         }else {
             isLoading = false

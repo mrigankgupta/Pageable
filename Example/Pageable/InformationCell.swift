@@ -11,11 +11,11 @@ import UIKit
 
 
 class InformationCell: UITableViewCell {
-    @IBOutlet weak var manufacturer: UILabel!
+    @IBOutlet weak var user: UILabel!
     @IBOutlet weak var background: UIView!
 
     func configureCell(with source: (CellDataSource & CellStyling), for indexPath: IndexPath) {
-        manufacturer.text = source.titleText
+        user.text = source.titleText
         background.backgroundColor = source.background(index: indexPath.row)
     }
 }
