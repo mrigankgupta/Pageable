@@ -30,7 +30,7 @@ Pageable provide support for incorprating pagination in easy way. With pageable,
   # s.social_media_url = 'https://twitter.com/@mrigankgupta'
 
   s.ios.deployment_target = '11.0'
-  s.swift_version = '4.2'
+  #s.swift_version = '4.2'
   s.source_files = 'Pageable/Classes/**/*'
   
   # s.resource_bundles = {

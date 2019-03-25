@@ -82,7 +82,12 @@ extension UserView: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension UserView: PageDataSource {
-
+    /* Server can add/remove items dynamically so it might be a case that
+     an item which appears in previous request can come again due to
+     certain element below got removed. This could result as duplicate items
+     appearing in the list. To mitigate it, we would be creating a parallel dictionary
+     which can be checked for duplicate items
+     */
     func addUniqueItems(for items: [AnyObject]) -> Range<Int> {
         let startIndex = pgInteractor.count()
         if let items = items as? [User] {
@@ -125,7 +130,7 @@ extension UIView {
 }
 
 extension UITableView {
-    // Reusable identifier should be unique acroos the app.There should be a convention to
+    // Reusable identifier should be unique across the app.There should be a convention to
     // give identifer names as there are chances for collision if app has
     // lots of cells and views. We can use compiler help here by using Class name as reusable identifier and nib names.
     // As we can only create cell class with unique names, it will help in giving unique reusable identifier name also.

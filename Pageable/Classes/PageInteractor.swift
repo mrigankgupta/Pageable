@@ -22,8 +22,14 @@ public class PageInteractor <Item, KeyType: Hashable> {
     public weak var pageDelegate: Pageable?
     public weak var pageDataSource: PageDataSource?
     public internal(set) var isLoading = false
+    #if swift(>=4.2)
     private var currentPage: Int
+    private let firstPage: Int
+    #else
+    fileprivate var currentPage: Int
     fileprivate let firstPage: Int
+    #endif
+
     private var showLoadingCell = false
 
     public init(firstPage: Int) {
