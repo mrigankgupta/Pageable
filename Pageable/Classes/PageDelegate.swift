@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol Pageable: class {
+public protocol PageDelegate: class {
     func insertAndUpdateRows(new: [IndexPath])
     func reloadAll(_ reload: Bool)
     func setupRefreshControl(_ target: Any?, selector: Selector)
@@ -35,7 +35,7 @@ public struct PageInfo<T> {
     }
 }
 
-extension UITableView: Pageable {
+extension UITableView: PageDelegate {
 
     public func insertAndUpdateRows(new: [IndexPath]) {
         self.performBatchUpdates({
@@ -66,7 +66,7 @@ extension UITableView: Pageable {
 
 }
 
-extension UICollectionView: Pageable {
+extension UICollectionView: PageDelegate {
 
     public func insertAndUpdateRows(new: [IndexPath]) {
         self.performBatchUpdates({

@@ -17,9 +17,9 @@ public class PageInteractor <Item, KeyType: Hashable> {
 
     public var array: [Item] = []
     public var dict: [KeyType : KeyType] = [:]
-    public var service: PagableService?
+    public var service: PagableService
 
-    public weak var pageDelegate: Pageable?
+    public weak var pageDelegate: PageDelegate?
     public weak var pageDataSource: PageDataSource?
     public internal(set) var isLoading = false
     #if swift(>=4.2)
@@ -32,9 +32,10 @@ public class PageInteractor <Item, KeyType: Hashable> {
 
     private var showLoadingCell = false
 
-    public init(firstPage: Int) {
+    public init(firstPage: Int, service: PagableService) {
         self.firstPage = firstPage
         currentPage = firstPage
+        self.service = service
     }
 
     public func visibleRow() -> Int {
@@ -45,14 +46,14 @@ public class PageInteractor <Item, KeyType: Hashable> {
         array.removeAll()
         dict.removeAll()
         isLoading = true
-        service?.cancelAllRequests()
-        service?.loadPage(firstPage)
+        service.cancelAllRequests()
+        service.loadPage(firstPage)
     }
 
     public func loadNextPage() {
         if !isLoading {
             isLoading = true
-            service?.loadPage(currentPage+1)
+            service.loadPage(currentPage+1)
         }
     }
 

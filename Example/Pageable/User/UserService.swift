@@ -11,6 +11,7 @@ final class UserService: WebService {
 
     func fetchUser(page: Int, pageSize: Int = 3) {
         guard let resource: Resourse<PagedResponse<[User]>> = try? prepareResource(page: page, pageSize: pageSize, pathForREST: "/api/users") else { return }
+        //Construct PageInfo to be utilised by Pageable
         var info: PageInfo<User>?
         super.getMe(res: resource) { (res) in
             switch res {

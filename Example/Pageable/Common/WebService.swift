@@ -12,8 +12,8 @@ import Pageable
 fileprivate let baseURL = "reqres.in"
 
 struct Resourse<T> {
-    var url: URL
-    var parse: (Data) -> T?
+    let url: URL
+    let parse: (Data) -> T?
 }
 #if swift(>=5.0)
 #else
@@ -101,10 +101,10 @@ class WebService {
 }
 
 struct PagedResponse<T: Decodable>: Decodable {
-    var types: T
-    var page: Int
-    var pageSize: Int
-    var totalPageCount: Int
+    let types: T
+    let page: Int
+    let pageSize: Int
+    let totalPageCount: Int
     public enum CodingKeys: String, CodingKey {
         case types = "data"
         case page

@@ -9,8 +9,8 @@ import Pageable
 
 class UserView: UIViewController {
 
-    var pgInteractor: PageInteractor<User, String>
-    lazy var tableView = UITableView()
+    private var pgInteractor: PageInteractor<User, String>
+    private lazy var tableView = UITableView()
 
     init(pageInteractor: PageInteractor<User, String>) {
         self.pgInteractor = pageInteractor

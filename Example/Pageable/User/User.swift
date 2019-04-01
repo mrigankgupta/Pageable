@@ -24,8 +24,8 @@ struct UserList: Decodable {
     typealias ArrayType = User
     typealias KeyType = String
 
-    var array = [User]()
-    var dict = JsonDict()
+    private(set) var array = [User]()
+    private(set) var dict = JsonDict()
 
     struct UserKey: CodingKey {
         var stringValue: String
