@@ -1,6 +1,5 @@
 //
 //  PageController.swift
-//  ShowMyRide
 //
 //  Created by Gupta, Mrigank on 28/08/18.
 //  Copyright © 2018 Gupta, Mrigank. All rights reserved.
@@ -14,8 +13,8 @@ public protocol PageDelegate: class {
     func setupRefreshControl(_ target: Any?, selector: Selector)
 }
 
-public protocol WebResponse: class {
-    func returnedResponse<T>(_ info: PageInfo<T>?)
+public protocol WebResponse: class {    
+    func returnedResponse<Item>(_ info: PageInfo<Item>?)
 }
 
 public protocol PagableService {

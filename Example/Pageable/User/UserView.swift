@@ -9,10 +9,10 @@ import Pageable
 
 class UserView: UIViewController {
 
-    private var pgInteractor: PageInteractor<User, String>
+    private var pgInteractor: PageInteractor<User, Int>
     private lazy var tableView = UITableView()
 
-    init(pageInteractor: PageInteractor<User, String>) {
+    init(pageInteractor: PageInteractor<User, Int>) {
         self.pgInteractor = pageInteractor
         super.init(nibName: nil, bundle: nil)
     }
@@ -81,36 +81,7 @@ extension UserView: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension UserView: PageDataSource {
-    /* Server can add/remove items dynamically so it might be a case that
-     an item which appears in previous request can come again due to
-     certain element below got removed. This could result as duplicate items
-     appearing in the list. To mitigate it, we would be creating a parallel dictionary
-     which can be checked for duplicate items
-     */
-    func addUniqueItems(for items: [AnyObject]) -> Range<Int> {
-        let startIndex = pgInteractor.count()
-        if let items = items as? [User] {
-            for new in items {
-                if pgInteractor.dict[String(new.id)] == nil {
-                    pgInteractor.dict[String(new.id)] = String(new.id)
-                    pgInteractor.array.append(new)
-                }
-            }
-        }
-        return startIndex..<pgInteractor.count()
-    }
-
-    func addAll(items: [AnyObject]) {
-        if let items = items as? [User] {
-            pgInteractor.array = items
-            for new in items {
-                pgInteractor.dict[String(new.id)] = String(new.id)
-            }
-        }
-    }
-
-}
+extension UserView: PageDataSource {}
 
 extension UserView {
     @objc

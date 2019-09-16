@@ -1,6 +1,5 @@
 //
 //  PageInteractor.swift
-//  ShowMyRide
 //
 //  Created by Gupta, Mrigank on 19/08/18.
 //  Copyright © 2018 Gupta, Mrigank. All rights reserved.
@@ -9,14 +8,19 @@
 import Foundation
 
 public protocol PageDataSource: class {
-    func addUniqueItems(for items: [AnyObject]) -> Range<Int>
-    func addAll(items: [AnyObject])
+    
+    func addUniqueItems<Element, KeyType>(items: [Element],
+                                         keypath: KeyPath<Element, KeyType>,
+                                         in interactor: PageInteractor<Element, KeyType>) -> Range<Int>
+    func addAll<Element, KeyType>(items: [Element],
+                                  keypath: KeyPath<Element, KeyType>,
+                                  in interactor: PageInteractor<Element, KeyType>)
 }
 
-public class PageInteractor <Item, KeyType: Hashable> {
+public class PageInteractor <Element, KeyType: Hashable> {
 
-    public var array: [Item] = []
-    public var dict: [KeyType : KeyType] = [:]
+    public var array: [Element] = []
+    public var dict: [KeyType : Any] = [:]
     public var service: PagableService
 
     public weak var pageDelegate: PageDelegate?
@@ -25,17 +29,20 @@ public class PageInteractor <Item, KeyType: Hashable> {
     #if swift(>=4.2)
     private var currentPage: Int
     private let firstPage: Int
+    private let keyPath: KeyPath<Element, KeyType>
     #else
     fileprivate var currentPage: Int
     fileprivate let firstPage: Int
+    fileprivate let keyPath: KeyPath<Element, KeyType>
     #endif
 
     private var showLoadingCell = false
 
-    public init(firstPage: Int, service: PagableService) {
+    public init(firstPage: Int, service: PagableService, keyPath: KeyPath<Element, KeyType>) {
         self.firstPage = firstPage
         currentPage = firstPage
         self.service = service
+        self.keyPath = keyPath
     }
 
     public func visibleRow() -> Int {
@@ -53,12 +60,12 @@ public class PageInteractor <Item, KeyType: Hashable> {
     public func loadNextPage() {
         if !isLoading {
             isLoading = true
-            service.loadPage(currentPage+1)
+            service.loadPage(currentPage + 1)
         }
     }
 
     public func shouldPrefetch(index: Int) {
-        if showLoadingCell && index == count()-1 {
+        if showLoadingCell && index == count() - 1 {
             loadNextPage()
         }
     }
@@ -85,7 +92,7 @@ public class PageInteractor <Item, KeyType: Hashable> {
         showLoadingCell = currentPage < totalPageCount
     }
 
-    public func selectedItem(for index: Int) -> Item {
+    public func selectedItem(for index: Int) -> Element {
         return array[index]
     }
 
@@ -95,19 +102,23 @@ public class PageInteractor <Item, KeyType: Hashable> {
 }
 
 extension PageInteractor: WebResponse {
-
-    public func returnedResponse<T>(_ info: PageInfo<T>?) {
+    
+    public func returnedResponse<Item>(_ info: PageInfo<Item>?) {
         if let currentResponse = info {
             let lastPageNumber = currentPage
             updatePage(number: currentResponse.page, totalPageCount: currentResponse.totalPageCount)
             print(currentResponse.page)
             if currentResponse.page == firstPage {
-                pageDataSource?.addAll(items: currentResponse.types as [AnyObject])
+//                pageDataSource?.done(items: currentResponse.types)
+//                pageDataSource?.test(keypath: self.keyPath, in: self)
+                pageDataSource?.addAll(items: currentResponse.types as! [Element], keypath: self.keyPath, in: self)
                 DispatchQueue.main.async {
                     self.pageDelegate?.reloadAll(true)
                 }
             } else if currentResponse.page == lastPageNumber + 1 {
-                if let numberOfItems = pageDataSource?.addUniqueItems(for: currentResponse.types as [AnyObject]) {
+                if let numberOfItems = pageDataSource?.addUniqueItems(items: currentResponse.types as! [Element],
+                                                                      keypath: self.keyPath,
+                                                                      in: self) {
                     let newIndexPaths = getUniqueItemsIndexPath(addedRange: numberOfItems)
                     DispatchQueue.main.async {
                         self.pageDelegate?.insertAndUpdateRows(new: newIndexPaths)
@@ -124,5 +135,36 @@ extension PageInteractor: WebResponse {
 //            print("some error")
         }
     }
+}
 
+extension PageDataSource {
+    /* Server can add/remove items dynamically so it might be a case that
+     an item which appears in previous request can come again due to
+     certain element below got removed. This could result as duplicate items
+     appearing in the list. To mitigate it, we would be creating a parallel dictionary
+     which can be checked for duplicate items
+     */
+    public func addUniqueItems<Element, KeyType>(items: [Element],
+                                                 keypath: KeyPath<Element, KeyType>,
+                                                 in interactor: PageInteractor<Element, KeyType>) -> Range<Int> {
+        let startIndex = interactor.count()
+        for new in items {
+            let key = new[keyPath: keypath]
+            if interactor.dict[key] == nil {
+                interactor.dict[key] = key
+                interactor.array.append(new)
+            }
+        }
+        return startIndex..<interactor.count()
+    }
+    
+    public func addAll<Element, KeyType>(items: [Element],
+                                         keypath: KeyPath<Element, KeyType>,
+                                         in interactor: PageInteractor<Element, KeyType>) {
+        interactor.array = items
+        for new in items {
+            let key = new[keyPath: keypath]
+            interactor.dict[key] = key
+        }
+    }
 }

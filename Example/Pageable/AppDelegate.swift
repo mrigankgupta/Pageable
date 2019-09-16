@@ -15,13 +15,13 @@ private let firstReqIndex = 1
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    let service = UserService()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         guard let window = window else {
             return false
         }
-        let pageInteractor: PageInteractor<User, String> = PageInteractor(firstPage: firstReqIndex)
+        let pageInteractor: PageInteractor<User, Int> = PageInteractor(firstPage: firstReqIndex, service: service, keyPath: \User.id)
         let viewController = UserView(pageInteractor: pageInteractor)
         window.rootViewController = viewController
         window.makeKeyAndVisible()
