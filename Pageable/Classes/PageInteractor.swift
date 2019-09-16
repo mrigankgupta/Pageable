@@ -102,6 +102,7 @@ public class PageInteractor <Element, KeyType: Hashable> {
 }
 
 extension PageInteractor: WebResponse {
+//    public typealias Item = Element
     
     public func returnedResponse<Item>(_ info: PageInfo<Item>?) {
         if let currentResponse = info {
@@ -132,7 +133,7 @@ extension PageInteractor: WebResponse {
             DispatchQueue.main.async {
                 self.pageDelegate?.reloadAll(false)
             }
-//            print("some error")
+        //            print("some error")
         }
     }
 }

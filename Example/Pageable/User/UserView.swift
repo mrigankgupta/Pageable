@@ -43,7 +43,7 @@ class UserView: UIViewController {
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.setupRefreshControl(self, selector:#selector(self.refreshPage))
     }
-
+    // 3. setup PageInteractor
     private func setupPageInteractor() {
         pgInteractor.pageDelegate = self.tableView
         pgInteractor.pageDataSource = self
@@ -57,7 +57,7 @@ class UserView: UIViewController {
 extension UserView: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int { return 1 }
-
+    // 5. Populate cells from interactor
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pgInteractor.visibleRow()
     }
@@ -84,6 +84,7 @@ extension UserView: UITableViewDelegate, UITableViewDataSource {
 extension UserView: PageDataSource {}
 
 extension UserView {
+    //4. refresh page to load
     @objc
     func refreshPage() {
         pgInteractor.refreshPage()

@@ -14,7 +14,7 @@ public protocol PageDelegate: class {
 }
 
 public protocol WebResponse: class {    
-    func returnedResponse<Item>(_ info: PageInfo<Item>?)
+    func returnedResponse<Item>(_ pageInfo: PageInfo<Item>?)
 }
 
 public protocol PagableService {
@@ -80,7 +80,6 @@ extension UICollectionView: PageDelegate {
     public func reloadAll(_ reload: Bool) {
         if reload {
             self.reloadData()
-            print("reload")
         }
         refreshControl?.endRefreshing()
     }

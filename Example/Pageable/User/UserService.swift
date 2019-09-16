@@ -11,13 +11,15 @@ final class UserService: WebService {
 
     func fetchUser(page: Int, pageSize: Int = 3) {
         guard let resource: Resourse<PagedResponse<[User]>> = try? prepareResource(page: page, pageSize: pageSize, pathForREST: "/api/users") else { return }
-        //Construct PageInfo to be utilised by Pageable
+        // construction of PageInfo to be utilised by Pageable
         var info: PageInfo<User>?
         super.getMe(res: resource) { (res) in
             switch res {
             case let .success(result):
-                info = PageInfo(types: result.types, page: result.page,
-                                                        totalPageCount: result.totalPageCount)
+//              1. Provide PageInfo Object from the response or nil in case no response
+                info = PageInfo(types: result.types,
+                                page: result.page,
+                                totalPageCount: result.totalPageCount)
             case let .failure(err):
                 print(err)
             }
@@ -26,6 +28,7 @@ final class UserService: WebService {
     }
 }
 
+// 2. implement PageableService protocol
 extension UserService: PagableService {
 
     func loadPage(_ page: Int) {
