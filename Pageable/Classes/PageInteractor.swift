@@ -21,11 +21,11 @@ public class PageInteractor <Element, KeyType: Hashable> {
 
     public var array: [Element] = []
     public var dict: [KeyType : Any] = [:]
-    public var service: PagableService
+    private var service: PagableService
 
-    public weak var pageDelegate: PageDelegate?
+    public weak var pageDelegate: PageLoadDelegate?
     public weak var pageDataSource: PageDataSource?
-    public internal(set) var isLoading = false
+    public private(set) var isLoading = false
     #if swift(>=4.2)
     private var currentPage: Int
     private let firstPage: Int

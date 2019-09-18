@@ -8,6 +8,7 @@ import Pageable
 
 
 final class UserService: WebService {
+    weak var delegate: WebResponse?
 
     func fetchUser(page: Int, pageSize: Int = 3) {
         guard let resource: Resourse<PagedResponse<[User]>> = try? prepareResource(page: page, pageSize: pageSize, pathForREST: "/api/users") else { return }

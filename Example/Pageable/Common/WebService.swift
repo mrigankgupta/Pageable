@@ -30,7 +30,6 @@ enum AppError: Error {
 }
 
 class WebService {
-    weak var delegate: WebResponse?
     var session = URLSession(configuration: URLSession.shared.configuration)
 
     private var parameters: [String : String] = [:]

@@ -7,7 +7,7 @@
 
 import UIKit
 
-public protocol PageDelegate: class {
+public protocol PageLoadDelegate: class {
     func insertAndUpdateRows(new: [IndexPath])
     func reloadAll(_ reload: Bool)
     func setupRefreshControl(_ target: Any?, selector: Selector)
@@ -34,7 +34,7 @@ public struct PageInfo<T> {
     }
 }
 
-extension UITableView: PageDelegate {
+extension UITableView: PageLoadDelegate {
 
     public func insertAndUpdateRows(new: [IndexPath]) {
         self.performBatchUpdates({
@@ -65,7 +65,7 @@ extension UITableView: PageDelegate {
 
 }
 
-extension UICollectionView: PageDelegate {
+extension UICollectionView: PageLoadDelegate {
 
     public func insertAndUpdateRows(new: [IndexPath]) {
         self.performBatchUpdates({

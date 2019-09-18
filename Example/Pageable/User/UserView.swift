@@ -49,7 +49,6 @@ class UserView: UIViewController {
         pgInteractor.pageDataSource = self
         let userService = UserService()
         userService.delegate = pgInteractor
-        pgInteractor.service = userService
         pgInteractor.refreshPage()
     }
 }
