@@ -6,7 +6,7 @@
 import Foundation
 import Pageable
 
-// 2. implement PageableService protocol
+// SETUP:4 implement PageableService protocol
 final class UserService: WebService, PagableService {
     
     func loadPage<Item: Decodable, KeyType>(_ page: Int, interactor: PageInteractor<Item, KeyType>, completion: @escaping (PageInfo<Item>?) -> Void) where KeyType : Hashable {
@@ -19,13 +19,14 @@ final class UserService: WebService, PagableService {
         super.getMe(res: resource) { (res) in
             switch res {
             case let .success(result):
-//              1. Provide PageInfo Object from the response or nil in case no response
+                //Provide PageInfo Object from the response or nil in case no response
                 info = PageInfo(types: result.types,
                                 page: result.page,
                                 totalPageCount: result.totalPageCount)
             case let .failure(err):
                 print(err)
             }
+            //returning PageInfo Object from callback to PageInteractor
             completion(info)
         }
     }

@@ -43,7 +43,7 @@ class UserView: UIViewController {
         tableView.tableFooterView = UIView(frame: .zero)
         tableView.setupRefreshControl(self, selector:#selector(self.refreshPage))
     }
-    // 3. setup PageInteractor
+    // SETUP:1 Setup PageInteractor
     private func setupPageInteractor() {
         pgInteractor.pageDelegate = self.tableView
         pgInteractor.pageDataSource = self
@@ -52,14 +52,14 @@ class UserView: UIViewController {
 }
 
 extension UserView: UITableViewDelegate, UITableViewDataSource {
-
+    // SETUP:2 Populate cells from PageInteractor
     func numberOfSections(in tableView: UITableView) -> Int { return 1 }
-    // 5. Populate cells from interactor
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pgInteractor.visibleRow()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if indexPath.row >= pgInteractor.count() {
             let loadingCell: LoadingCell = tableView.dequeueReusableCell(for: indexPath)
             loadingCell.activityIndicator.startAnimating()
@@ -78,7 +78,7 @@ extension UserView: UITableViewDelegate, UITableViewDataSource {
         pgInteractor.shouldPrefetch(index: indexPath.row)
     }
 }
-
+// SETUP:3 Adopting PageDataSource Protocol
 extension UserView: PageDataSource {}
 
 extension UserView {
