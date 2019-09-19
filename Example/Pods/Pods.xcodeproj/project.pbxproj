@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0300C4783AB50B2D49A5058FB413F57D /* Pods-Pageable_Tests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 172A28C81211505296BB94B01D4EBF95 /* Pods-Pageable_Tests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3A88CC1D22213393000B4F30 /* PageInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88CC1A22213392000B4F30 /* PageInteractor.swift */; };
-		3A88CC1F22213393000B4F30 /* PageLoadDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88CC1C22213392000B4F30 /* PageLoadDelegate.swift */; };
+		3A88CC1F22213393000B4F30 /* NewPageLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88CC1C22213392000B4F30 /* NewPageLoad.swift */; };
 		40A8B56691BAE99EFE85964F9D4BD717 /* Pods-Pageable_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F930C435EC5A485E791A9639FE59246C /* Pods-Pageable_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5EF35B6F07CD1FC9C38153AA7A318BA8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */; };
 		8B1F3CFA19AC594053587F8F0B05D56D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */; };
@@ -17,6 +17,9 @@
 		9C658C770984EF3ACF9449E5E3C3215B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */; };
 		E0F0EF96EBF1A2D372DB4BFE62E354AF /* Pods-Pageable_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AF0A5C0CBC4F2D51A306419FD4FBA3 /* Pods-Pageable_Example-dummy.m */; };
 		E907D672434B8DCA60CC5E6BEF3A75C0 /* Pods-Pageable_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AECFDE282DBBF7BAC64EBCC4D7BB6725 /* Pods-Pageable_Tests-dummy.m */; };
+		EA08BDD32333311B005A6F77 /* PageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA08BDD22333311B005A6F77 /* PageDataSource.swift */; };
+		EA08BDD5233331E3005A6F77 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA08BDD4233331E3005A6F77 /* PageInfo.swift */; };
+		EA08BDD72333320B005A6F77 /* PageableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA08BDD62333320B005A6F77 /* PageableService.swift */; };
 		F0F85DF5CC672E03B3269E1FDC714F22 /* Pageable-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A410911EC70A843815DD3A3FDCBAD2CC /* Pageable-dummy.m */; };
 /* End PBXBuildFile section */
 
@@ -46,7 +49,7 @@
 		39939F85EB918362D25E144FB76E109B /* Pods-Pageable_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Pageable_Tests.modulemap"; sourceTree = "<group>"; };
 		39FA391C3D4DB4DB51A39540F45C1D35 /* Pageable.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Pageable.modulemap; sourceTree = "<group>"; };
 		3A88CC1A22213392000B4F30 /* PageInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInteractor.swift; sourceTree = "<group>"; };
-		3A88CC1C22213392000B4F30 /* PageLoadDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageLoadDelegate.swift; sourceTree = "<group>"; };
+		3A88CC1C22213392000B4F30 /* NewPageLoad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPageLoad.swift; sourceTree = "<group>"; };
 		4211274E31833658C72D9E5C8148BB0D /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		57F263647A32EF2B4CC129EC51D4C991 /* Pageable.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = Pageable.podspec; sourceTree = "<group>"; tabWidth = 2; };
 		67C2BCB84457204F02BBF5F5FE11B42A /* Pods-Pageable_Tests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Pageable_Tests-acknowledgements.markdown"; sourceTree = "<group>"; };
@@ -67,6 +70,9 @@
 		D6F4CC8C05337986F2DC79217EBC6E00 /* Pods_Pageable_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pageable_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB0E2E1D91884AB1298D81DD89FAF96F /* Pods-Pageable_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Pageable_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		E881AA961D7DE3C2F2CF69F393234B06 /* Pods-Pageable_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Pageable_Example.modulemap"; sourceTree = "<group>"; };
+		EA08BDD22333311B005A6F77 /* PageDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageDataSource.swift; sourceTree = "<group>"; };
+		EA08BDD4233331E3005A6F77 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
+		EA08BDD62333320B005A6F77 /* PageableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageableService.swift; sourceTree = "<group>"; };
 		F84C83CE5B9652F0A49DEF518EDF4381 /* Pods-Pageable_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Pageable_Example.release.xcconfig"; sourceTree = "<group>"; };
 		F930C435EC5A485E791A9639FE59246C /* Pods-Pageable_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Pageable_Example-umbrella.h"; sourceTree = "<group>"; };
 		FB4C72BB59BC3408E15070348EFD9DB3 /* Pods-Pageable_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Pageable_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -105,7 +111,10 @@
 			isa = PBXGroup;
 			children = (
 				3A88CC1A22213392000B4F30 /* PageInteractor.swift */,
-				3A88CC1C22213392000B4F30 /* PageLoadDelegate.swift */,
+				3A88CC1C22213392000B4F30 /* NewPageLoad.swift */,
+				EA08BDD22333311B005A6F77 /* PageDataSource.swift */,
+				EA08BDD4233331E3005A6F77 /* PageInfo.swift */,
+				EA08BDD62333320B005A6F77 /* PageableService.swift */,
 			);
 			name = Classes;
 			path = Pageable/Classes;
@@ -390,9 +399,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A88CC1F22213393000B4F30 /* PageLoadDelegate.swift in Sources */,
+				EA08BDD72333320B005A6F77 /* PageableService.swift in Sources */,
+				3A88CC1F22213393000B4F30 /* NewPageLoad.swift in Sources */,
 				F0F85DF5CC672E03B3269E1FDC714F22 /* Pageable-dummy.m in Sources */,
+				EA08BDD5233331E3005A6F77 /* PageInfo.swift in Sources */,
 				3A88CC1D22213393000B4F30 /* PageInteractor.swift in Sources */,
+				EA08BDD32333311B005A6F77 /* PageDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

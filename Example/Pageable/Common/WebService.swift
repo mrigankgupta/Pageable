@@ -72,7 +72,9 @@ class WebService {
         return components.url
     }
 
-    final func prepareResource<T: Decodable>(page: Int, pageSize: Int, pathForREST: String,
+    final func prepareResource<T: Decodable>(page: Int,
+                                             pageSize: Int,
+                                             pathForREST: String,
                                              argsDict: [String : String]? = nil) throws -> Resourse<T> {
         parameters["page"] = String(page)
         parameters["pageSize"] = String(pageSize)

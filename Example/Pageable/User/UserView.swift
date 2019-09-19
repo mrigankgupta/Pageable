@@ -47,8 +47,6 @@ class UserView: UIViewController {
     private func setupPageInteractor() {
         pgInteractor.pageDelegate = self.tableView
         pgInteractor.pageDataSource = self
-        let userService = UserService()
-        userService.delegate = pgInteractor
         pgInteractor.refreshPage()
     }
 }
@@ -74,8 +72,9 @@ extension UserView: UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
-                            forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
         pgInteractor.shouldPrefetch(index: indexPath.row)
     }
 }

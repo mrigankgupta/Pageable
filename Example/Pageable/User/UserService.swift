@@ -6,14 +6,16 @@
 import Foundation
 import Pageable
 
-
-final class UserService: WebService {
-    weak var delegate: WebResponse?
-
-    func fetchUser(page: Int, pageSize: Int = 3) {
-        guard let resource: Resourse<PagedResponse<[User]>> = try? prepareResource(page: page, pageSize: pageSize, pathForREST: "/api/users") else { return }
+// 2. implement PageableService protocol
+final class UserService: WebService, PagableService {
+    
+    func loadPage<Item: Decodable, KeyType>(_ page: Int, interactor: PageInteractor<Item, KeyType>, completion: @escaping (PageInfo<Item>?) -> Void) where KeyType : Hashable {
+        guard let resource: Resourse<PagedResponse<[Item]>> = try? prepareResource(page: page, pageSize: 3, pathForREST: "/api/users") else {
+            completion(nil)
+            return
+        }
         // construction of PageInfo to be utilised by Pageable
-        var info: PageInfo<User>?
+        var info: PageInfo<Item>?
         super.getMe(res: resource) { (res) in
             switch res {
             case let .success(result):
@@ -24,18 +26,10 @@ final class UserService: WebService {
             case let .failure(err):
                 print(err)
             }
-            self.delegate?.returnedResponse(info)
+            completion(info)
         }
     }
-}
-
-// 2. implement PageableService protocol
-extension UserService: PagableService {
-
-    func loadPage(_ page: Int) {
-        fetchUser(page: page)
-    }
-
+    
     func cancelAllRequests() {
         cancelAll()
     }

@@ -7,34 +7,13 @@
 
 import UIKit
 
-public protocol PageLoadDelegate: class {
+public protocol NewPageLoad: class {
     func insertAndUpdateRows(new: [IndexPath])
     func reloadAll(_ reload: Bool)
     func setupRefreshControl(_ target: Any?, selector: Selector)
 }
 
-public protocol WebResponse: class {    
-    func returnedResponse<Item>(_ pageInfo: PageInfo<Item>?)
-}
-
-public protocol PagableService {
-    func loadPage(_ page: Int)
-    func cancelAllRequests()
-}
-
-public struct PageInfo<T> {
-    var types: [T]
-    var page: Int
-    var totalPageCount: Int
-
-    public init(types: [T], page: Int, totalPageCount: Int) {
-        self.types = types
-        self.page = page
-        self.totalPageCount = totalPageCount
-    }
-}
-
-extension UITableView: PageLoadDelegate {
+extension UITableView: NewPageLoad {
 
     public func insertAndUpdateRows(new: [IndexPath]) {
         self.performBatchUpdates({
@@ -65,7 +44,7 @@ extension UITableView: PageLoadDelegate {
 
 }
 
-extension UICollectionView: PageLoadDelegate {
+extension UICollectionView: NewPageLoad {
 
     public func insertAndUpdateRows(new: [IndexPath]) {
         self.performBatchUpdates({

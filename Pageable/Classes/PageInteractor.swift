@@ -7,23 +7,13 @@
 
 import Foundation
 
-public protocol PageDataSource: class {
-    
-    func addUniqueItems<Element, KeyType>(items: [Element],
-                                         keypath: KeyPath<Element, KeyType>,
-                                         in interactor: PageInteractor<Element, KeyType>) -> Range<Int>
-    func addAll<Element, KeyType>(items: [Element],
-                                  keypath: KeyPath<Element, KeyType>,
-                                  in interactor: PageInteractor<Element, KeyType>)
-}
-
-public class PageInteractor <Element, KeyType: Hashable> {
+public class PageInteractor <Element: Decodable, KeyType: Hashable> {
 
     public var array: [Element] = []
     public var dict: [KeyType : Any] = [:]
-    private var service: PagableService
+    private weak var service: PagableService?
 
-    public weak var pageDelegate: PageLoadDelegate?
+    public weak var pageDelegate: NewPageLoad?
     public weak var pageDataSource: PageDataSource?
     public private(set) var isLoading = false
     #if swift(>=4.2)
@@ -53,14 +43,18 @@ public class PageInteractor <Element, KeyType: Hashable> {
         array.removeAll()
         dict.removeAll()
         isLoading = true
-        service.cancelAllRequests()
-        service.loadPage(firstPage)
+        service?.cancelAllRequests()
+        service?.loadPage(firstPage, interactor: self) { (info)  in
+            self.returnedResponse(info)
+        }
     }
-
+ 
     public func loadNextPage() {
         if !isLoading {
             isLoading = true
-            service.loadPage(currentPage + 1)
+            service?.loadPage(currentPage + 1, interactor: self) { (info) in
+                self.returnedResponse(info)
+            }
         }
     }
 
@@ -99,25 +93,21 @@ public class PageInteractor <Element, KeyType: Hashable> {
     public func count() -> Int {
         return array.count
     }
-}
-
-extension PageInteractor: WebResponse {
-//    public typealias Item = Element
     
-    public func returnedResponse<Item>(_ info: PageInfo<Item>?) {
+    func returnedResponse(_ info: PageInfo<Element>?) {
         if let currentResponse = info {
             let lastPageNumber = currentPage
             updatePage(number: currentResponse.page, totalPageCount: currentResponse.totalPageCount)
             print(currentResponse.page)
             if currentResponse.page == firstPage {
-//                pageDataSource?.done(items: currentResponse.types)
-//                pageDataSource?.test(keypath: self.keyPath, in: self)
-                pageDataSource?.addAll(items: currentResponse.types as! [Element], keypath: self.keyPath, in: self)
+                //                pageDataSource?.done(items: currentResponse.types)
+                //                pageDataSource?.test(keypath: self.keyPath, in: self)
+                pageDataSource?.addAll(items: currentResponse.types, keypath: self.keyPath, in: self)
                 DispatchQueue.main.async {
                     self.pageDelegate?.reloadAll(true)
                 }
             } else if currentResponse.page == lastPageNumber + 1 {
-                if let numberOfItems = pageDataSource?.addUniqueItems(items: currentResponse.types as! [Element],
+                if let numberOfItems = pageDataSource?.addUniqueItems(items: currentResponse.types,
                                                                       keypath: self.keyPath,
                                                                       in: self) {
                     let newIndexPaths = getUniqueItemsIndexPath(addedRange: numberOfItems)
@@ -133,39 +123,7 @@ extension PageInteractor: WebResponse {
             DispatchQueue.main.async {
                 self.pageDelegate?.reloadAll(false)
             }
-        //            print("some error")
-        }
-    }
-}
-
-extension PageDataSource {
-    /* Server can add/remove items dynamically so it might be a case that
-     an item which appears in previous request can come again due to
-     certain element below got removed. This could result as duplicate items
-     appearing in the list. To mitigate it, we would be creating a parallel dictionary
-     which can be checked for duplicate items
-     */
-    public func addUniqueItems<Element, KeyType>(items: [Element],
-                                                 keypath: KeyPath<Element, KeyType>,
-                                                 in interactor: PageInteractor<Element, KeyType>) -> Range<Int> {
-        let startIndex = interactor.count()
-        for new in items {
-            let key = new[keyPath: keypath]
-            if interactor.dict[key] == nil {
-                interactor.dict[key] = key
-                interactor.array.append(new)
-            }
-        }
-        return startIndex..<interactor.count()
-    }
-    
-    public func addAll<Element, KeyType>(items: [Element],
-                                         keypath: KeyPath<Element, KeyType>,
-                                         in interactor: PageInteractor<Element, KeyType>) {
-        interactor.array = items
-        for new in items {
-            let key = new[keyPath: keypath]
-            interactor.dict[key] = key
+            //            print("some error")
         }
     }
 }
