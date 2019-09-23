@@ -6,10 +6,11 @@
 import Foundation
 import Pageable
 
+final class UserService: WebService {}
+
 // SETUP:4 implement PageableService protocol
-final class UserService: WebService, PagableService {
-    
-    func loadPage<Item: Decodable, KeyType>(_ page: Int, interactor: PageInteractor<Item, KeyType>, completion: @escaping (PageInfo<Item>?) -> Void) where KeyType : Hashable {
+extension UserService: PagableService {
+    func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void) {
         guard let resource: Resourse<PagedResponse<[Item]>> = try? prepareResource(page: page, pageSize: 3, pathForREST: "/api/users") else {
             completion(nil)
             return

@@ -28,9 +28,9 @@ public class PageInteractor <Element: Decodable, KeyType: Hashable> {
 
     private var showLoadingCell = false
 
-    public init(firstPage: Int, service: PagableService, keyPath: KeyPath<Element, KeyType>) {
+    public init(firstPage: Int = 0, service: PagableService? = nil, keyPath: KeyPath<Element, KeyType>) {
         self.firstPage = firstPage
-        currentPage = firstPage
+        self.currentPage = firstPage
         self.service = service
         self.keyPath = keyPath
     }
@@ -44,7 +44,7 @@ public class PageInteractor <Element: Decodable, KeyType: Hashable> {
         dict.removeAll()
         isLoading = true
         service?.cancelAllRequests()
-        service?.loadPage(firstPage, interactor: self) { (info)  in
+        service?.loadPage(firstPage) { (info)  in
             self.returnedResponse(info)
         }
     }
@@ -52,7 +52,7 @@ public class PageInteractor <Element: Decodable, KeyType: Hashable> {
     public func loadNextPage() {
         if !isLoading {
             isLoading = true
-            service?.loadPage(currentPage + 1, interactor: self) { (info) in
+            service?.loadPage(currentPage + 1) { (info) in
                 self.returnedResponse(info)
             }
         }
@@ -123,7 +123,7 @@ public class PageInteractor <Element: Decodable, KeyType: Hashable> {
             DispatchQueue.main.async {
                 self.pageDelegate?.reloadAll(false)
             }
-            //            print("some error")
+//            print("some error")
         }
     }
 }

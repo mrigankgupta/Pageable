@@ -8,6 +8,6 @@
 import Foundation
 
 public protocol PagableService: class {
-    func loadPage<Item: Decodable, KeyType>(_ page: Int, interactor: PageInteractor<Item, KeyType>, completion: @escaping (PageInfo<Item>?) -> Void)
+    func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void)
     func cancelAllRequests()
 }
