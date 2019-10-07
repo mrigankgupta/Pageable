@@ -7,13 +7,13 @@
 
 import Foundation
 
-public protocol PageDataSource: class {
+public protocol PageDataSource {
     
     func addUniqueItems<Element, KeyType>(items: [Element],
-                                          keypath: KeyPath<Element, KeyType>,
+                                          keypath: KeyPath<Element, KeyType>?,
                                           in interactor: PageInteractor<Element, KeyType>) -> Range<Int>
     func addAll<Element, KeyType>(items: [Element],
-                                  keypath: KeyPath<Element, KeyType>,
+                                  keypath: KeyPath<Element, KeyType>?,
                                   in interactor: PageInteractor<Element, KeyType>)
 }
 
@@ -25,23 +25,28 @@ extension PageDataSource {
      which can be checked for duplicate items
      */
     public func addUniqueItems<Element, KeyType>(items: [Element],
-                                                 keypath: KeyPath<Element, KeyType>,
+                                                 keypath: KeyPath<Element, KeyType>?,
                                                  in interactor: PageInteractor<Element, KeyType>) -> Range<Int> {
         let startIndex = interactor.count()
-        for new in items {
-            let key = new[keyPath: keypath]
-            if interactor.dict[key] == nil {
-                interactor.dict[key] = key
-                interactor.array.append(new)
+        if let keypath = keypath {
+            for new in items {
+                let key = new[keyPath: keypath]
+                if interactor.dict[key] == nil {
+                    interactor.dict[key] = key
+                    interactor.array.append(new)
+                }
             }
         }
         return startIndex..<interactor.count()
     }
     
     public func addAll<Element, KeyType>(items: [Element],
-                                         keypath: KeyPath<Element, KeyType>,
+                                         keypath: KeyPath<Element, KeyType>?,
                                          in interactor: PageInteractor<Element, KeyType>) {
         interactor.array = items
+        guard let keypath = keypath else {
+            return
+        }
         for new in items {
             let key = new[keyPath: keypath]
             interactor.dict[key] = key
