@@ -17,7 +17,6 @@
 		9C658C770984EF3ACF9449E5E3C3215B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4607EFCA7C5F75397649E792E2AFCB /* Foundation.framework */; };
 		E0F0EF96EBF1A2D372DB4BFE62E354AF /* Pods-Pageable_Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 76AF0A5C0CBC4F2D51A306419FD4FBA3 /* Pods-Pageable_Example-dummy.m */; };
 		E907D672434B8DCA60CC5E6BEF3A75C0 /* Pods-Pageable_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AECFDE282DBBF7BAC64EBCC4D7BB6725 /* Pods-Pageable_Tests-dummy.m */; };
-		EA08BDD32333311B005A6F77 /* PageDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA08BDD22333311B005A6F77 /* PageDataSource.swift */; };
 		EA08BDD5233331E3005A6F77 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA08BDD4233331E3005A6F77 /* PageInfo.swift */; };
 		EA08BDD72333320B005A6F77 /* PageableService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA08BDD62333320B005A6F77 /* PageableService.swift */; };
 		F0F85DF5CC672E03B3269E1FDC714F22 /* Pageable-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A410911EC70A843815DD3A3FDCBAD2CC /* Pageable-dummy.m */; };
@@ -70,7 +69,6 @@
 		D6F4CC8C05337986F2DC79217EBC6E00 /* Pods_Pageable_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Pageable_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB0E2E1D91884AB1298D81DD89FAF96F /* Pods-Pageable_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Pageable_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		E881AA961D7DE3C2F2CF69F393234B06 /* Pods-Pageable_Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Pageable_Example.modulemap"; sourceTree = "<group>"; };
-		EA08BDD22333311B005A6F77 /* PageDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageDataSource.swift; sourceTree = "<group>"; };
 		EA08BDD4233331E3005A6F77 /* PageInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
 		EA08BDD62333320B005A6F77 /* PageableService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageableService.swift; sourceTree = "<group>"; };
 		F84C83CE5B9652F0A49DEF518EDF4381 /* Pods-Pageable_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Pageable_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 			children = (
 				3A88CC1A22213392000B4F30 /* PageInteractor.swift */,
 				3A88CC1C22213392000B4F30 /* NewPageLoad.swift */,
-				EA08BDD22333311B005A6F77 /* PageDataSource.swift */,
 				EA08BDD4233331E3005A6F77 /* PageInfo.swift */,
 				EA08BDD62333320B005A6F77 /* PageableService.swift */,
 			);
@@ -335,7 +332,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1100;
 				TargetAttributes = {
 					242366B9F5BC5661E178EB61D33AFD3C = {
 						LastSwiftMigration = 1010;
@@ -344,11 +341,11 @@
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
+				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
 			productRefGroup = 961C44680B628D66905F780C53277B39 /* Products */;
@@ -404,7 +401,6 @@
 				F0F85DF5CC672E03B3269E1FDC714F22 /* Pageable-dummy.m in Sources */,
 				EA08BDD5233331E3005A6F77 /* PageInfo.swift in Sources */,
 				3A88CC1D22213393000B4F30 /* PageInteractor.swift in Sources */,
-				EA08BDD32333311B005A6F77 /* PageDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

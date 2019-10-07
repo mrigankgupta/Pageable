@@ -14,13 +14,15 @@
 		3A88CC0722212D69000B4F30 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88CC0522212D69000B4F30 /* LoadingCell.swift */; };
 		3A88CC1222212D8E000B4F30 /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88CC0922212D8D000B4F30 /* UserView.swift */; };
 		3A88CC1322212D8E000B4F30 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88CC0A22212D8D000B4F30 /* UserService.swift */; };
-		3A88CC1422212D8E000B4F30 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88CC0B22212D8D000B4F30 /* User.swift */; };
+		3A88CC1422212D8E000B4F30 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88CC0B22212D8D000B4F30 /* UserModel.swift */; };
 		3A88CC1822212D8E000B4F30 /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A88CC1122212D8E000B4F30 /* WebService.swift */; };
 		3A88CC242223BE04000B4F30 /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A88CC222223BE03000B4F30 /* LoadingCell.xib */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		EA43DFA8233D283D0013D888 /* UIView+extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA43DFA7233D283D0013D888 /* UIView+extention.swift */; };
+		EA43DFAA233D28C20013D888 /* UITableView+extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA43DFA9233D28C20013D888 /* UITableView+extention.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +44,7 @@
 		3A88CC0522212D69000B4F30 /* LoadingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		3A88CC0922212D8D000B4F30 /* UserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		3A88CC0A22212D8D000B4F30 /* UserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
-		3A88CC0B22212D8D000B4F30 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		3A88CC0B22212D8D000B4F30 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		3A88CC1122212D8E000B4F30 /* WebService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		3A88CC232223BE03000B4F30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoadingCell.xib; sourceTree = "<group>"; };
 		3F464D83CA2FDCEF16591EBC /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -59,6 +61,8 @@
 		8E94E8A6E9D2EC240AFCB8EC /* Pods-Pageable_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pageable_Tests.debug.xcconfig"; path = "Target Support Files/Pods-Pageable_Tests/Pods-Pageable_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		9163B16E6803D5F252D5790D /* Pods-Pageable_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pageable_Example.release.xcconfig"; path = "Target Support Files/Pods-Pageable_Example/Pods-Pageable_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9749AF9F9493B5C6893756FF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		EA43DFA7233D283D0013D888 /* UIView+extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extention.swift"; sourceTree = "<group>"; };
+		EA43DFA9233D28C20013D888 /* UITableView+extention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+extention.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +101,7 @@
 			children = (
 				3A88CC0922212D8D000B4F30 /* UserView.swift */,
 				3A88CC0A22212D8D000B4F30 /* UserService.swift */,
-				3A88CC0B22212D8D000B4F30 /* User.swift */,
+				3A88CC0B22212D8D000B4F30 /* UserModel.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -105,7 +109,9 @@
 		3A88CC1022212D8E000B4F30 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				EA43DFA7233D283D0013D888 /* UIView+extention.swift */,
 				3A88CC1122212D8E000B4F30 /* WebService.swift */,
+				EA43DFA9233D28C20013D888 /* UITableView+extention.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -241,7 +247,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
@@ -259,7 +265,7 @@
 			};
 			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Pageable" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -373,10 +379,12 @@
 			files = (
 				3A88CC1322212D8E000B4F30 /* UserService.swift in Sources */,
 				3A88CC0722212D69000B4F30 /* LoadingCell.swift in Sources */,
-				3A88CC1422212D8E000B4F30 /* User.swift in Sources */,
+				3A88CC1422212D8E000B4F30 /* UserModel.swift in Sources */,
+				EA43DFA8233D283D0013D888 /* UIView+extention.swift in Sources */,
 				3A88CC1222212D8E000B4F30 /* UserView.swift in Sources */,
 				3A88CC0622212D69000B4F30 /* InformationCell.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				EA43DFAA233D28C20013D888 /* UITableView+extention.swift in Sources */,
 				3A88CC1822212D8E000B4F30 /* WebService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -423,6 +431,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -478,6 +487,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;

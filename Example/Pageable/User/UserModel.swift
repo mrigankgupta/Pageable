@@ -7,7 +7,7 @@ import Foundation
 
 typealias JsonDict = [String : String]
 
-struct User: Decodable {
+struct UserModel: Decodable {
     let id: Int
     let firstName: String
     let lastName: String
@@ -21,10 +21,10 @@ struct User: Decodable {
 
 struct UserList: Decodable {
 
-    typealias ArrayType = User
+    typealias ArrayType = UserModel
     typealias KeyType = String
 
-    private(set) var array = [User]()
+    private(set) var array = [UserModel]()
     private(set) var dict = JsonDict()
 
     struct UserKey: CodingKey {
@@ -41,11 +41,11 @@ extension UserList {
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: UserKey.self)
-        var list = [User]()
+        var list = [UserModel]()
         var dict = JsonDict()
         for key in container.allKeys {
-            let value = try container.decode(User.self, forKey: key)
-            list.append(User(id: value.id, firstName: value.firstName, lastName: value.lastName))
+            let value = try container.decode(UserModel.self, forKey: key)
+            list.append(UserModel(id: value.id, firstName: value.firstName, lastName: value.lastName))
             let idKey = String(value.id)
             dict[idKey] = idKey
         }

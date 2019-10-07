@@ -11,8 +11,8 @@ import UIKit
 
 
 class InformationCell: UITableViewCell {
-    @IBOutlet weak var user: UILabel!
-    @IBOutlet weak var background: UIView!
+    @IBOutlet private weak var user: UILabel!
+    @IBOutlet private weak var background: UIView!
 
     func configureCell(with source: (CellDataSource & CellStyling), for indexPath: IndexPath) {
         user.text = source.titleText
@@ -28,7 +28,7 @@ protocol CellStyling {
     func background(index: Int) -> UIColor
 }
 
-extension User: CellStyling, CellDataSource {
+extension UserModel: CellStyling, CellDataSource {
     func background(index: Int) -> UIColor {
         if index % 2 == 0 {
             return UIColor.brown

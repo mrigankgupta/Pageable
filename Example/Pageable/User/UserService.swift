@@ -8,7 +8,7 @@ import Pageable
 
 final class UserService: WebService {}
 
-// SETUP:4 implement PageableService protocol
+// SETUP:3 implement PageableService protocol
 extension UserService: PagableService {
     func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void) {
         guard let resource: Resourse<PagedResponse<[Item]>> = try? prepareResource(page: page, pageSize: 3, pathForREST: "/api/users") else {

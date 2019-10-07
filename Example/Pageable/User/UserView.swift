@@ -9,10 +9,10 @@ import Pageable
 
 class UserView: UIViewController {
 
-    private var pgInteractor: PageInteractor<User, Int>
+    private var pgInteractor: PageInteractor<UserModel, Int>
     private lazy var tableView = UITableView()
 
-    init(pageInteractor: PageInteractor<User, Int>) {
+    init(pageInteractor: PageInteractor<UserModel, Int>) {
         self.pgInteractor = pageInteractor
         super.init(nibName: nil, bundle: nil)
     }
@@ -46,7 +46,6 @@ class UserView: UIViewController {
     // SETUP:1 Setup PageInteractor
     private func setupPageInteractor() {
         pgInteractor.pageDelegate = self.tableView
-        pgInteractor.pageDataSource = self
         pgInteractor.refreshPage()
     }
 }
@@ -66,7 +65,7 @@ extension UserView: UITableViewDelegate, UITableViewDataSource {
             return loadingCell
         } else {
             let infoCell: InformationCell = tableView.dequeueReusableCell(for: indexPath)
-            let user = pgInteractor.selectedItem(for: indexPath.row)
+            let user = pgInteractor.item(for: indexPath.row)
             infoCell.configureCell(with: user, for: indexPath)
             return infoCell
         }
@@ -78,51 +77,11 @@ extension UserView: UITableViewDelegate, UITableViewDataSource {
         pgInteractor.shouldPrefetch(index: indexPath.row)
     }
 }
-// SETUP:3 Adopting PageDataSource Protocol
-extension UserView: PageDataSource {}
 
 extension UserView {
     //4. refresh page to load
     @objc
     func refreshPage() {
         pgInteractor.refreshPage()
-    }
-}
-
-extension UIView {
-    static func nibName() -> String {
-        return String(describing: self)
-    }
-
-    static func reusableIdetifier() -> String {
-        return String(describing: self)
-    }
-}
-
-extension UITableView {
-    // Reusable identifier should be unique across the app.There should be a convention to
-    // give identifer names as there are chances for collision if app has
-    // lots of cells and views. We can use compiler help here by using Class name as reusable identifier and nib names.
-    // As we can only create cell class with unique names, it will help in giving unique reusable identifier name also.
-    func dequeueReusableCell<T: UITableViewCell> (for indexPath: IndexPath) -> T {
-        guard let cell = dequeueReusableCell(withIdentifier: T.reusableIdetifier(), for: indexPath) as? T else {
-            fatalError("Can't not cast Cell with reusable identfier\(T.reusableIdetifier())")
-        }
-        return cell
-    }
-
-    func dequeueReusableHeaderFooterView<T: UIView> () -> T {
-        guard let cell = dequeueReusableHeaderFooterView(withIdentifier:T.reusableIdetifier()) as? T else {
-            fatalError("Can't not cast View with reusable identfier\(T.reusableIdetifier())")
-        }
-        return cell
-    }
-
-    func registerNib<T: UITableViewCell>(forCell: T.Type) {
-        register(UINib(nibName: T.nibName(), bundle: nil), forCellReuseIdentifier: T.reusableIdetifier())
-    }
-
-    func registerNib<T: UIView>(forforHeaderFooterView: T.Type) {
-        register(UINib(nibName: T.nibName(), bundle: nil), forHeaderFooterViewReuseIdentifier: T.reusableIdetifier())
     }
 }

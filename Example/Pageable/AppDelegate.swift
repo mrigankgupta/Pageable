@@ -21,7 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let window = window else {
             return false
         }
-        let pageInteractor: PageInteractor<User, Int> = PageInteractor(firstPage: firstReqIndex, service: service, keyPath: \User.id)
+        // SETUP:0 initialise the PageInteractor object
+        let pageInteractor: PageInteractor<UserModel, Int> = PageInteractor(firstPage: firstReqIndex, service: service, keyPath: \UserModel.id)
         let viewController = UserView(pageInteractor: pageInteractor)
         window.rootViewController = viewController
         window.makeKeyAndVisible()
