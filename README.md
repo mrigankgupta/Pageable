@@ -5,6 +5,96 @@
 [![License](https://img.shields.io/cocoapods/l/Pageable.svg?style=flat)](https://cocoapods.org/pods/Pageable)
 [![Platform](https://img.shields.io/cocoapods/p/Pageable.svg?style=flat)](https://cocoapods.org/pods/Pageable)
 
+
+## Basic Usage
+
+So how do you use this library? Well, it's pretty easy. Just follow these steps..
+# Step 0
+Create a simple Pageinteractor object. PageInteractor requires type of `Model` on which it operates and `Any` in case if unique items filtering is not required or `Model` doesn't have any unique identifing objects.
+```
+ let pageInteractor: PageInteractor<Model, Any> = PageInteractor()
+```
+# Step 1
+Now instance of pageInteractor to be setup in ViewDidLoad() to get first page data.
+```
+func setupPageInteractor() {
+  pageInteractor.pageDelegate = self.tableView
+  pageInteractor.refreshPage()
+}
+
+override func viewDidLoad() {
+   super.viewDidLoad()
+   setupPageInteractor()
+ }
+ ```
+ # Step 2
+ TableView will ask for items count from PageInteractor.
+ ```
+ func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+      return pageInteractor.visibleRow()
+ }
+ 
+ override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+   // Fetch a cell of the appropriate type.
+   if indexPath.row >= pageInteractor.count() {
+        let loadingCell = tableView.dequeueReusableCell(withIdentifier: "loadingCell", for: indexPath)
+        return loadingCell
+    } else {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellTypeIdentifier", for: indexPath)
+        let cellData = pageInteractor.item(for: indexPath.row)
+        // Configure the cell’s contents.
+        cell.textLabel!.text = cellData.name
+        return cell
+    }
+    
+     func tableView(_ tableView: UITableView,
+                   willDisplay cell: UITableViewCell,
+                   forRowAt indexPath: IndexPath) {
+        pageInteractor.shouldPrefetch(index: indexPath.row)
+    }
+}
+ ```
+ # Step 3
+Now most importent step is to provide data to PageInteractor. That is done by implementing `PagableService` protocol. It has got two methods in it.
+ ```
+ protocol PagableService: class {
+    func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void)
+    func cancelAllRequests()
+}
+```
+When PageInteractor's refresh method gets called either by end of TableView load or pulling UIRefreshControl, it tracks page number and ask for next page load by calling 
+`loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void)`
+Where `page` indicates the next page to load. Once page gets loaded, `PageInfo` struct needs to be return.
+```
+struct PageInfo<T> {
+    var types: [T] // list of item returned from request
+    var page: Int // current page
+    var totalPageCount: Int // total page
+}
+```
+Below is how it will be done
+```
+func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void) {
+        var info: PageInfo<Item>?
+        networkManager.getNextPageData { (response) in
+            switch response {
+            case let .success(result):
+                // Provide PageInfo Object from the response or nil in case no response
+                info = PageInfo(types: result.types,
+                                page: result.page,
+                                totalPageCount: result.totalPageCount)
+            case let .failure(err):
+                print(err)
+            }
+            // returning PageInfo Object from callback to PageInteractor
+            completion(info)
+        }
+    }
+    
+    func cancelAllRequests() {
+        cancelAll()
+    }
+```
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
