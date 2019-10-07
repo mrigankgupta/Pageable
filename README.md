@@ -11,12 +11,12 @@
 So how do you use this library? Well, it's pretty easy. Just follow these steps..
 # Step 0
 Create a simple Pageinteractor object. PageInteractor requires type of `Model` on which it operates and `Any` in case if unique items filtering is not required or `Model` doesn't have any unique identifing objects.
-```
+```swift
  let pageInteractor: PageInteractor<Model, Any> = PageInteractor()
 ```
 # Step 1
 Now instance of pageInteractor to be setup in ViewDidLoad() to get first page data.
-```
+```swift
 func setupPageInteractor() {
   pageInteractor.pageDelegate = self.tableView
   pageInteractor.refreshPage()
@@ -29,7 +29,7 @@ override func viewDidLoad() {
  ```
  # Step 2
  TableView will ask for items count from PageInteractor.
- ```
+ ```swift
  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
       return pageInteractor.visibleRow()
  }
@@ -56,7 +56,7 @@ override func viewDidLoad() {
  ```
  # Step 3
 Now most importent step is to provide data to PageInteractor. That is done by implementing `PagableService` protocol. It has got two methods in it.
- ```
+ ```swift
  protocol PagableService: class {
     func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void)
     func cancelAllRequests()
@@ -65,7 +65,7 @@ Now most importent step is to provide data to PageInteractor. That is done by im
 When PageInteractor's refresh method gets called either by end of TableView load or pulling UIRefreshControl, it tracks page number and ask for next page load by calling 
 `loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void)`
 Where `page` indicates the next page to load. Once page gets loaded, `PageInfo` struct needs to be return.
-```
+```swift
 struct PageInfo<T> {
     var types: [T] // list of item returned from request
     var page: Int // current page
@@ -73,7 +73,7 @@ struct PageInfo<T> {
 }
 ```
 Below is how it will be done
-```
+```swift
 func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void) {
         var info: PageInfo<Item>?
         networkManager.getNextPageData { (response) in
