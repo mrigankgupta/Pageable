@@ -12,7 +12,7 @@ So how do you use this library? Well, it's pretty easy. Just follow these steps.
 # Step 0
 Create a simple PageInteractor object. PageInteractor operates on two generics types. 
 
-First generic is type of `Model` which TableView is listing.
+First generic is type of `Model` which TableView/CollectionView is listing.
 
 Second generic is type of unique items in model data for identifing duplicate entries to be filter out.
 By default, the type can be given as `Any`, if filtering is not required or `Model` doesn't have any unique identifiable object.
@@ -81,11 +81,13 @@ struct PageInfo<T> {
     var totalPageCount: Int // total page
 }
 ```
-Below is how it can be done
+how it can be done, is shown below.
 ```swift
-func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void) {
+extension NetworkManager: PagableService {
+   func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void) {
         var info: PageInfo<Item>?
-        networkManager.getNextPageData { (response) in
+        getNextPage(page: page) { (response) in
+        // paginated response will have page number as well as total page
             switch response {
             case let .success(result):
                 // Provide PageInfo Object from the response or nil in case no response
@@ -95,7 +97,7 @@ func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item
             case let .failure(err):
                 print(err)
             }
-            // returning PageInfo Object from callback to PageInteractor
+            // Returning PageInfo Object from callback to PageInteractor
             completion(info)
         }
     }
@@ -103,6 +105,7 @@ func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item
     func cancelAllRequests() {
         cancelAll()
     }
+}
 ```
 ## Example
 
