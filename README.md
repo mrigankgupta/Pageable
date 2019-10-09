@@ -10,15 +10,24 @@
 
 So how do you use this library? Well, it's pretty easy. Just follow these steps..
 # Step 0
-Create a simple Pageinteractor object. PageInteractor requires type of `Model` on which it operates and `Any` in case if unique items filtering is not required or `Model` doesn't have any unique identifing objects.
+Create a simple PageInteractor object. PageInteractor operates on two generics types. 
+
+First generic is type of `Model` which TableView is listing.
+
+Second generic is type of unique items in model data for identifing duplicate entries to be filter out.
+By default, the type can be given as `Any`, if filtering is not required or `Model` doesn't have any unique identifiable object.
+
 ```swift
  let pageInteractor: PageInteractor<Model, Any> = PageInteractor()
 ```
+
 # Step 1
 Now instance of pageInteractor to be setup in ViewDidLoad() to get first page data.
 ```swift
 func setupPageInteractor() {
   pageInteractor.pageDelegate = self.tableView
+  // NetworkManager is implementing PageableService protocol
+  pageInteractor.service = networkManager
   pageInteractor.refreshPage()
 }
 
@@ -72,7 +81,7 @@ struct PageInfo<T> {
     var totalPageCount: Int // total page
 }
 ```
-Below is how it will be done
+Below is how it can be done
 ```swift
 func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void) {
         var info: PageInfo<Item>?
