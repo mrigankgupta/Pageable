@@ -5,6 +5,13 @@
 [![License](https://img.shields.io/cocoapods/l/Pageable.svg?style=flat)](https://cocoapods.org/pods/Pageable)
 [![Platform](https://img.shields.io/cocoapods/p/Pageable.svg?style=flat)](https://cocoapods.org/pods/Pageable)
 
+## Purpose
+"[Pagination](https://en.wikipedia.org/wiki/Pagination), also known as paging, is the process of dividing a document into discrete pages, either electronic pages or printed pages."
+
+It is most common technique to manage large data set at server/client side to distribute in chunks called as pages. In todays time, Social media client apps improvised this by inventing "Infinite scroll".
+ 
+Infinite scrolling allows users to load content continuously, eliminating the need for user's explicit actions. App loads some initial data and then load the rest of the data when the user reaches the bottom of the visible content. This data is divided in pages.
+
 
 ## Basic Usage
 
@@ -14,7 +21,7 @@ Create a simple PageInteractor object. PageInteractor operates on two generics t
 
 First generic is type of `Model` which TableView/CollectionView is listing.
 
-Second generic is type of unique items in model data for identifing duplicate entries to be filter out.
+Second generic is a type of unique items in model data for identifing duplicate entries to be filter out.
 By default, the type can be given as `Any`, if filtering is not required or `Model` doesn't have any unique identifiable object.
 
 ```swift
