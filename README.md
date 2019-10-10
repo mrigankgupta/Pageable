@@ -32,6 +32,7 @@ By default, the type can be given as `Any`, if filtering is not required or `Mod
 Now instance of pageInteractor to be setup in ViewDidLoad() to get first page data.
 ```swift
 func setupPageInteractor() {
+  // Require to provide instance of TableView/CollectionView
   pageInteractor.pageDelegate = self.tableView
   // NetworkManager is implementing PageableService protocol
   pageInteractor.service = networkManager
@@ -50,7 +51,7 @@ override func viewDidLoad() {
       return pageInteractor.visibleRow()
  }
  
- override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
    // Fetch a cell of the appropriate type.
    if indexPath.row >= pageInteractor.count() {
         let loadingCell = tableView.dequeueReusableCell(withIdentifier: "loadingCell", for: indexPath)
@@ -62,12 +63,10 @@ override func viewDidLoad() {
         cell.textLabel!.text = cellData.name
         return cell
     }
-    
-     func tableView(_ tableView: UITableView,
-                   willDisplay cell: UITableViewCell,
-                   forRowAt indexPath: IndexPath) {
-        pageInteractor.shouldPrefetch(index: indexPath.row)
-    }
+}
+
+func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    pageInteractor.shouldPrefetch(index: indexPath.row)
 }
  ```
  # Step 3
@@ -114,8 +113,34 @@ extension NetworkManager: PagableService {
     }
 }
 ```
-## Example
 
+## Advance Usage
+Pageable provide additional features like 
+1. Configurable start page index to be fetched from server
+2. Filtering out duplicate items while loading addition items in the list.
+
+```
+     If server has added new entry in previous page displayed in pagination,
+     it results in repeat of last item in fetched new page.
+     
+     Displayed                      __1__        On Server
+     ____________                 ____2_____
+     |  __1__   |                |  __3__   |       1
+     |  __2__   |                |  __4__   |       2
+     |  __3__   |  +__10__ ==    |  __4__   |      10
+     |____4_____|                |____5_____|       3
+        __5__                       __6__
+        __6__                       __7__
+        __7__                       __8__   new fetch
+        __8__                       __9__
+```
+In case if duplicate entries has to be filter out, It requires keypath of unique items in model data. It can be setup in initializer or later.
+        
+```swift
+let pageInteractor: PageInteractor<UserModel, Int> = PageInteractor(firstPage: 1, service: networkManager, keyPath: \UserModel.id)
+```
+
+## Example
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
 ## Requirements
