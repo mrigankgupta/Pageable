@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Pageable'
-  s.version          = '0.1.0'
+  s.version          = '1.0.0'
   s.summary          = 'Infinite scrolling(Pagination) done right'
 
 # This description is used to generate tags and improve search results.
@@ -30,7 +30,7 @@ Pageable provide support for incorprating pagination in easy way. With pageable,
   # s.social_media_url = 'https://twitter.com/@mrigankgupta'
 
   s.ios.deployment_target = '11.0'
-  #s.swift_version = '4.2'
+  #s.swift_version = '5.0'
   s.source_files = 'Pageable/Classes/**/*'
   
   # s.resource_bundles = {
