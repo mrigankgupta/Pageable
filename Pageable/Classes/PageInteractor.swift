@@ -15,7 +15,7 @@ public class PageInteractor <Element: Decodable, KeyType: Hashable> {
     public private(set) var dict: [KeyType : Any] = [:]
     public private(set) var isLoading = false
 
-    public weak var service: PagableService?
+    public weak var service: PageableService?
     private var currentPage: Int
     private let firstPage: Int
     private let keyPath: KeyPath<Element, KeyType>?
@@ -27,8 +27,8 @@ public class PageInteractor <Element: Decodable, KeyType: Hashable> {
      unique items in model data.
      
      # Example
-     if server has added new entry in last page displayed in pagination,
-     which results repeated last item in new page just fetched.
+     If server has added new entry in previous page displayed in pagination,
+     it results in repeat of last item in fetched new page.
      
      Displayed                      __1__        On Server
      ____________                 ____2_____
@@ -42,7 +42,7 @@ public class PageInteractor <Element: Decodable, KeyType: Hashable> {
         __8__                       __9__
      */
 
-    public init(firstPage: Int = 0, service: PagableService? = nil, keyPath: KeyPath<Element, KeyType>? = nil) {
+    public init(firstPage: Int = 0, service: PageableService? = nil, keyPath: KeyPath<Element, KeyType>? = nil) {
         self.firstPage = firstPage
         self.currentPage = firstPage
         self.service = service

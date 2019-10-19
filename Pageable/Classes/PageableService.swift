@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol PagableService: class {
+public protocol PageableService: class {
     func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void)
     func cancelAllRequests()
 }

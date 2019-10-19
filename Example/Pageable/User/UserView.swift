@@ -58,7 +58,6 @@ extension UserView: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if indexPath.row >= pgInteractor.count() {
             let loadingCell: LoadingCell = tableView.dequeueReusableCell(for: indexPath)
             loadingCell.activityIndicator.startAnimating()
@@ -79,7 +78,7 @@ extension UserView: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension UserView {
-    //4. refresh page to load
+    // SETUP:4 refresh page to load
     @objc
     func refreshPage() {
         pgInteractor.refreshPage()

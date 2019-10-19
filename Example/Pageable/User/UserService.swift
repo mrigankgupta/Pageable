@@ -9,25 +9,25 @@ import Pageable
 final class UserService: WebService {}
 
 // SETUP:3 implement PageableService protocol
-extension UserService: PagableService {
+extension UserService: PageableService {
     func loadPage<Item: Decodable>(_ page: Int, completion: @escaping (PageInfo<Item>?) -> Void) {
         guard let resource: Resourse<PagedResponse<[Item]>> = try? prepareResource(page: page, pageSize: 3, pathForREST: "/api/users") else {
             completion(nil)
             return
         }
-        // construction of PageInfo to be utilised by Pageable
+        // Construction of PageInfo to be utilised by Pageable
         var info: PageInfo<Item>?
         super.getMe(res: resource) { (res) in
             switch res {
             case let .success(result):
-                //Provide PageInfo Object from the response or nil in case no response
+                // Provide PageInfo Object from the response or nil in case no response
                 info = PageInfo(types: result.types,
                                 page: result.page,
                                 totalPageCount: result.totalPageCount)
             case let .failure(err):
                 print(err)
             }
-            //returning PageInfo Object from callback to PageInteractor
+            // Returning PageInfo Object from callback to PageInteractor
             completion(info)
         }
     }
