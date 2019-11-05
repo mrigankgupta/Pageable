@@ -57,6 +57,7 @@ public class PageInteractor <Element: Decodable, KeyType: Hashable> {
         array.removeAll()
         dict.removeAll()
         isLoading = true
+        currentPage = firstPage
         service?.cancelAllRequests()
         service?.loadPage(firstPage) { (info)  in
             self.returnedResponse(info)
