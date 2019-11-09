@@ -5,6 +5,9 @@
 [![License](https://img.shields.io/cocoapods/l/Pageable.svg?style=flat)](https://cocoapods.org/pods/Pageable)
 [![Platform](https://img.shields.io/cocoapods/p/Pageable.svg?style=flat)](https://cocoapods.org/pods/Pageable)
 
+
+![Infinite Scrolling Demo](./demo.gif)
+
 ## Purpose
 "[Pagination](https://en.wikipedia.org/wiki/Pagination), also known as paging, is the process of dividing a document into discrete pages, either electronic pages or printed pages."
 
